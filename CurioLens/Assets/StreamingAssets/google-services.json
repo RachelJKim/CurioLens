@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "487280336687",
+    "project_id": "curiolens-58bb4",
+    "storage_bucket": "curiolens-58bb4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487280336687:android:b005bad16ac2c3d1bf8bda",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.CurioLens"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOZzkjmGTn-oxNkDCzHkP2tqsMPXVhA1s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
