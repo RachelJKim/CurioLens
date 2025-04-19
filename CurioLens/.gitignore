@@ -75,3 +75,18 @@ crashlytics-build.properties
 
 
 /[Aa]ssets/[Ss]cripts/Environment.cs
+
+# Firebase plugins - native binaries
+Assets/Firebase/Plugins/**/FirebaseCppApp_*.so
+Assets/Firebase/Plugins/**/FirebaseCppApp_*.bundle
+Assets/Firebase/Plugins/**/libFirebaseCppApp_*.dylib
+
+# Firebase Unity SDK (전체 제외하고 싶은 경우)
+Assets/Firebase/Plugins/
+Assets/Firebase/Editor/
+
+# (옵션) Android/IOS 빌드 아웃풋도 제외
+Temp/
+Library/
+obj/
+build/
