@@ -7,22 +7,23 @@ using Firebase.Extensions;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-public class FirestoreManager
+public class FirestoreManager : MonoBehaviour
 {
     public static FirestoreManager Instance { get; private set; }
 
     private FirebaseFirestore db;
 
     [SerializeField]
-    private int currentUserId = 5;
+    private int currentUserId = -1;
 
-    public static void CreateInstance()
+    private void Awake()
     {
-        Instance = new FirestoreManager();
+        Instance = this;
     }
 
-    public FirestoreManager()
+    private async void Start()
     {
+        await InitiateAsync();
     }
 
     public async Task InitiateAsync()
@@ -57,7 +58,7 @@ public class FirestoreManager
             List<UserData> userDataList = JsonConvert.DeserializeObject<List<UserData>>(jsonString);
             Debug.Log("UserData list parsed successfully!");
 
-            DataManager.CreateInstance(objectDataList, userDataList);
+            DataManager.Instance.SetData(objectDataList, userDataList);
         }
         catch (System.Exception e)
         {

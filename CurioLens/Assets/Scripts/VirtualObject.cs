@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Oculus.Interaction;
 using TMPro;
 using UnityEngine;
@@ -9,6 +6,8 @@ using UnityEngine;
 public class VirtualObject : MonoBehaviour
 {
     private InteractableUnityEventWrapper interactableUnityEventWrapper;
+
+    private LLMAnswerData currentLLMAnswerData;
 
     private void Awake()
     {
@@ -20,6 +19,8 @@ public class VirtualObject : MonoBehaviour
         interactableUnityEventWrapper.WhenHover.AddListener(PlaceQuestionUI);
         interactableUnityEventWrapper.WhenUnhover.AddListener(RemoveQuestionUI);
         interactableUnityEventWrapper.WhenUnselect.AddListener(GetAnswerData);
+
+        GameObject.Find("Poses").GetComponent<PoseDetector>().OnPoseDetected.AddListener(UpdateObjectData);
     }
 
     private void PlaceQuestionUI()
@@ -40,21 +41,29 @@ public class VirtualObject : MonoBehaviour
             return;
         }
 
-        LLMAnswerData llmAnswerData = await LLMManager.Instance.GetDescriptionJson(gameObject.name, question);
+        currentLLMAnswerData = await LLMManager.Instance.GetDescriptionJson(gameObject.name, question);
 
-        Debug.Log("science description 입니다" + llmAnswerData.Concept + " : " + llmAnswerData.Description + " : " + llmAnswerData.Effect);
+        Debug.Log("science description 입니다" + currentLLMAnswerData.Concept + " : " + currentLLMAnswerData.Description + " : " + currentLLMAnswerData.Effect);
 
         GameObject answerUI = InteractionManager.Instance.PlaceUI(UIType.Answer, transform);
-        answerUI.transform.Find("Dialog_Text/text").GetComponent<TextMeshProUGUI>().text = llmAnswerData.Description;
+        answerUI.transform.Find("Dialog_Text/text").GetComponent<TextMeshProUGUI>().text = currentLLMAnswerData.Description;
 
-        if (llmAnswerData.Effect != "none")
+        if (currentLLMAnswerData.Effect != "none")
         {
-            EffectType effectType = (EffectType)System.Enum.Parse(typeof(EffectType), llmAnswerData.Effect);
-
+            EffectType effectType = (EffectType)System.Enum.Parse(typeof(EffectType), currentLLMAnswerData.Effect);
             EffectManager.Instance.CreateEffect(effectType, transform);
         }
+    }
 
-        // TODO: ui에 띄워주기 + 관련 개념 있으면 prefeab 생성 =
-        // TODO: pose 기반 firebase 저장 연동하기 
+    private void UpdateObjectData(PoseType poseType)
+    {
+        switch (poseType)
+        {
+            case PoseType.ThumbsUp:
+                DataManager.Instance.AddObjectData(gameObject.name, currentLLMAnswerData.Concept, currentLLMAnswerData.Description);
+                break;
+            case PoseType.ThumbsDown: // UI 제거
+                break;
+        }
     }
 }

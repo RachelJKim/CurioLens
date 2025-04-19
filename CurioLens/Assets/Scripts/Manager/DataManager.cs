@@ -1,25 +1,32 @@
 using System.Collections.Generic;
+using Oculus.Interaction;
 using UnityEngine;
 
-public class DataManager
+public class DataManager : MonoBehaviour
 {
     public static DataManager Instance { get; private set; }
 
     private List<ObjectData> objectDataList;
     private List<UserData> userDataList; // TODO: user Data List에서 읽어가서 scene에 표시해주기
 
-    public static void CreateInstance(List<ObjectData> objectDataList, List<UserData> userDataList)
+    private void Awake()
     {
-        Instance = new DataManager(objectDataList, userDataList);
+        Instance = this;
+
+        objectDataList = new List<ObjectData>();
+        userDataList = new List<UserData>();
     }
 
-    public DataManager(List<ObjectData> objectDataList, List<UserData> userDataList)
+    public void SetData(List<ObjectData> objectDataList, List<UserData> userDataList)
     {
-        this.objectDataList = objectDataList;
+        if (objectDataList != null)
+        {
+            this.objectDataList = objectDataList;
+        }
+        
         this.userDataList = userDataList;
     }
 
-    // TODO: object Data 저장 할 떄 마다 호출 필요 
     public void AddObjectData(string objectName, string concept, string description)
     {
         ObjectData newObjectData = new ObjectData
@@ -28,7 +35,6 @@ public class DataManager
             Concept = concept,
             Description = description
         };
-
 
         objectDataList.Add(newObjectData);
 
