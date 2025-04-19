@@ -22,6 +22,17 @@ public class VirtualObject : MonoBehaviour
         interactableUnityEventWrapper.WhenUnselect.AddListener(GetAnswerData);
 
         GameObject.Find("Poses").GetComponent<PoseDetector>().OnPoseDetected.AddListener(UpdateObjectData);
+
+        STTManager sttManager = FindObjectOfType<STTManager>();
+        if (sttManager != null)
+        {
+            interactableUnityEventWrapper.WhenSelect.AddListener(sttManager.startRecording);
+            interactableUnityEventWrapper.WhenUnselect.AddListener(sttManager.stopRecording);
+        }
+        else
+        {
+            Debug.LogWarning("STTManager not found in scene!");
+        }
     }
 
     private void PlaceQuestionUI()
