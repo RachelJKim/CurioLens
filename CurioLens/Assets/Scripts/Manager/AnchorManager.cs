@@ -35,6 +35,7 @@ public class AnchorManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N)) // Place prefab at index tip
         {
+            Debug.Log("[HERE] NNNNNNNNNNNNN");
             PlaceCurrentPrefab();
         }
 
