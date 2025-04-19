@@ -6,32 +6,29 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class ScienceDescription
+public class LLMAnswerData
 {
     public string Concept { get; set; }
     public string Description { get; set; }
+    public string Effect { get; set; }
 }
 
-public class LLMManager
+public class LLMManager : MonoBehaviour
 {
     public static LLMManager Instance { get; private set; }
 
     private string systemPrompt;
 
-    public static void CreateInstance()
+    private void Awake()
     {
-        Instance = new LLMManager();
-    }
+        Instance = this;
 
-    public LLMManager()
-    {
         TextAsset systemPromptFile = Resources.Load<TextAsset>("Prompt/SystemPrompt");
-
         systemPrompt = systemPromptFile.text;
     }
 
     // output: string (science notion, description for science notion )
-    public async Task<ScienceDescription> GetDescriptionJson(string objectName, string question)
+    public async Task<LLMAnswerData> GetDescriptionJson(string objectName, string question)
     {
         string userPrompt = $@"
         Selected Object: {objectName},
@@ -66,7 +63,7 @@ public class LLMManager
             var responseString = await response.Content.ReadAsStringAsync();
             Debug.Log("LLM Response: " + responseString);
 
-            ScienceDescription scienceDescription = new ScienceDescription();
+            LLMAnswerData scienceDescription = new LLMAnswerData();
 
             try
             {
@@ -82,7 +79,7 @@ public class LLMManager
                         string responseContent = messageContent["content"].ToString();
 
                         string jsonContent = ExtractJsonFromResponse(responseContent);
-                        scienceDescription = JsonConvert.DeserializeObject<ScienceDescription>(jsonContent);
+                        scienceDescription = JsonConvert.DeserializeObject<LLMAnswerData>(jsonContent);
                     }
                 }
             }

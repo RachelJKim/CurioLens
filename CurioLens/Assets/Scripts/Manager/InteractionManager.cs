@@ -2,8 +2,16 @@ using UnityEngine;
 using Oculus.Interaction;
 using Oculus.Interaction.Input;
 
+public enum UIType
+{
+    Question,
+    Answer
+}
+
 public class InteractionManager : MonoBehaviour
 {
+    public static InteractionManager Instance { get; private set; }
+
     [Header("UI Prefabs")]
     public GameObject questionUIPrefab;
     public GameObject answerUIPrefab;
@@ -11,13 +19,16 @@ public class InteractionManager : MonoBehaviour
     [Header("Pinch Hand (Left)")]
     public OVRHand leftHand;
 
-    [SerializeField]
-    private GameObject questionUI = null;
-    [SerializeField]
-    private GameObject answerUI = null;
+    public GameObject questionUI = null;
+    public GameObject answerUI = null;
 
     public GameObject currentlyHoveredObject = null;  // 🧠 Track hovered object
     private bool isPinchTriggered = false;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Update()
     {
@@ -45,38 +56,47 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    public void PlaceUI(string type)
+    public GameObject PlaceUI(UIType uiType, Transform hoveredObjectTransfrom)
     {
-        Debug.Log("HERE");
-        Vector3 basePosition = currentlyHoveredObject != null
-            ? currentlyHoveredObject.transform.position + Vector3.up * 1f
-            : transform.position; // fallback
+        Vector3 basePosition = hoveredObjectTransfrom.transform.position + Vector3.up * 1f;
 
-        switch (type)
+        switch (uiType)
         {
-            case "question":
+            case UIType.Question:
                 if (questionUI == null)
                 {
-                    questionUI = Instantiate(questionUIPrefab, basePosition, Quaternion.identity);
+                    questionUI = Instantiate(questionUIPrefab, hoveredObjectTransfrom);
+                    questionUI.transform.position = basePosition;
+                    questionUI.transform.rotation = Quaternion.identity;
+                    questionUI.name = uiType.ToString();
                     Debug.Log("Question UI placed.");
+
+                    return questionUI;
                 }
                 break;
 
-            case "answer":
+            case UIType.Answer:
                 if (answerUI == null)
                 {
-                    answerUI = Instantiate(answerUIPrefab, basePosition, Quaternion.identity);
+                    answerUI = Instantiate(questionUIPrefab, hoveredObjectTransfrom);
+                    answerUI.transform.position = basePosition;
+                    answerUI.transform.rotation = Quaternion.identity;
+                    answerUI.name = uiType.ToString();
                     Debug.Log("Answer UI placed.");
+
+                    return answerUI;
                 }
                 break;
         }
+
+        return null;
     }
 
-    public void RemoveUI(string type)
+    public void RemoveUI(UIType uiType)
     {
-        switch (type)
+        switch (uiType)
         {
-            case "question":
+            case UIType.Question:
                 if (questionUI != null)
                 {
                     Destroy(questionUI);
@@ -85,7 +105,7 @@ public class InteractionManager : MonoBehaviour
                 }
                 break;
 
-            case "answer":
+            case UIType.Answer:
                 if (answerUI != null)
                 {
                     Destroy(answerUI);
@@ -111,8 +131,4 @@ public class InteractionManager : MonoBehaviour
     }
 }
 
-public enum UIType
-{
-    Question,
-    Answer
-}
+
