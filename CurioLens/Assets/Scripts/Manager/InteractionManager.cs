@@ -22,7 +22,7 @@ public class InteractionManager : MonoBehaviour
     public GameObject questionUI = null;
     public GameObject answerUI = null;
 
-    public GameObject currentlyHoveredObject = null;  // 🧠 Track hovered object
+    public GameObject currentlyHoveredObject = null;  // Track hovered object
     private bool isPinchTriggered = false;
 
     private void Awake()
@@ -40,7 +40,7 @@ public class InteractionManager : MonoBehaviour
     {
         if (questionUI == null && hoveredObject != null)
         {
-            currentlyHoveredObject = hoveredObject;  // ✅ Save it
+            currentlyHoveredObject = hoveredObject;  // Save it
             //PlaceUI(UIType.Question);
         }
     }
@@ -58,7 +58,7 @@ public class InteractionManager : MonoBehaviour
 
     public GameObject PlaceUI(UIType uiType, Transform hoveredObjectTransfrom)
     {
-        Vector3 basePosition = hoveredObjectTransfrom.transform.position + Vector3.up * 0.5f;
+        Vector3 basePosition = hoveredObjectTransfrom.transform.position + Vector3.up * 0.7f;
 
         switch (uiType)
         {
@@ -78,7 +78,7 @@ public class InteractionManager : MonoBehaviour
             case UIType.Answer:
                 if (answerUI == null)
                 {
-                    answerUI = Instantiate(questionUIPrefab, hoveredObjectTransfrom);
+                    answerUI = Instantiate(answerUIPrefab, hoveredObjectTransfrom);
                     answerUI.transform.position = basePosition;
                     answerUI.transform.rotation = Quaternion.identity;
                     answerUI.name = uiType.ToString();

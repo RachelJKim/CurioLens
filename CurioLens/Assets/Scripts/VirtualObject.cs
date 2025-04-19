@@ -18,6 +18,7 @@ public class VirtualObject : MonoBehaviour
     {
         interactableUnityEventWrapper.WhenHover.AddListener(PlaceQuestionUI);
         interactableUnityEventWrapper.WhenUnhover.AddListener(RemoveQuestionUI);
+        interactableUnityEventWrapper.WhenSelect.AddListener(StartLoadingAnimation);
         interactableUnityEventWrapper.WhenUnselect.AddListener(GetAnswerData);
 
         GameObject.Find("Poses").GetComponent<PoseDetector>().OnPoseDetected.AddListener(UpdateObjectData);
@@ -33,8 +34,15 @@ public class VirtualObject : MonoBehaviour
         InteractionManager.Instance.RemoveUI(UIType.Question);
     }
 
+    private void StartLoadingAnimation()
+    {
+        transform.Find("Question/Loading Bar").gameObject.SetActive(true);
+    }
+
     private async void GetAnswerData()
     {
+        transform.Find("Question/Loading Bar").gameObject.SetActive(false);
+        
         string question = transform.Find("Question/Dialog_Text/text").GetComponent<TextMeshProUGUI>().text;
         if (question == String.Empty)
         {

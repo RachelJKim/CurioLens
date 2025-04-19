@@ -97,7 +97,7 @@ public class STTManager : MonoBehaviour
             // 녹음된 audioclip api 서버로 보냄
             StartCoroutine(PostVoice(url, byteData));
         }
-        return;
+        // return;
     }
 
     private const int HEADER_SIZE = 44;
