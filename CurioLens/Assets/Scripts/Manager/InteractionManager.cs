@@ -58,7 +58,7 @@ public class InteractionManager : MonoBehaviour
 
     public GameObject PlaceUI(UIType uiType, Transform hoveredObjectTransfrom)
     {
-        Vector3 basePosition = hoveredObjectTransfrom.transform.position + Vector3.up * 1f;
+        Vector3 basePosition = hoveredObjectTransfrom.transform.position + Vector3.up * 0.5f;
 
         switch (uiType)
         {
