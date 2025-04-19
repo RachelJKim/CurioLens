@@ -7878,7 +7878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1653522328
 Transform:
   m_ObjectHideFlags: 0
@@ -8090,7 +8090,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questionUIPrefab: {fileID: 4627663893781476033, guid: f992fdafa7a3b2442b14b197ff398214, type: 3}
-  answerUIPrefab: {fileID: 6978776243049682974, guid: a33a5a0422197d5469c03dae75976a9b, type: 3}
+  answerUIPrefab: {fileID: 6902650566833561709, guid: a33a5a0422197d5469c03dae75976a9b, type: 3}
   leftHand: {fileID: 2168916185118818724}
   questionUI: {fileID: 0}
   answerUI: {fileID: 0}

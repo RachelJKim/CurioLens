@@ -449,7 +449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f8ae37cae461414d9936574e2e6ee36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listeningPrefab: {fileID: 100002, guid: d6acbcaaf0d98e34e8d95dc9e8ec0b5a, type: 3}
 --- !u!4 &241724510
 Transform:
   m_ObjectHideFlags: 0
@@ -542,7 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4ea4351ba9ebc942a7f1e95f1e1f07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionUIPrefab: {fileID: 2765188650095246550, guid: f992fdafa7a3b2442b14b197ff398214, type: 3}
+  questionUIPrefab: {fileID: 4627663893781476033, guid: f992fdafa7a3b2442b14b197ff398214, type: 3}
   answerUIPrefab: {fileID: 6978776243049682974, guid: a33a5a0422197d5469c03dae75976a9b, type: 3}
   leftHand: {fileID: 1635299718}
   questionUI: {fileID: 0}

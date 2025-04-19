@@ -42,7 +42,7 @@ public class VirtualObject : MonoBehaviour
     private async void GetAnswerData()
     {
         transform.Find("Question/Loading Bar").gameObject.SetActive(false);
-        
+
         string question = transform.Find("Question/Dialog_Text/text").GetComponent<TextMeshProUGUI>().text;
         if (question == String.Empty)
         {
@@ -54,7 +54,8 @@ public class VirtualObject : MonoBehaviour
         Debug.Log("science description 입니다" + currentLLMAnswerData.Concept + " : " + currentLLMAnswerData.Description + " : " + currentLLMAnswerData.Effect);
 
         GameObject answerUI = InteractionManager.Instance.PlaceUI(UIType.Answer, transform);
-        answerUI.transform.Find("Dialog_Text/text").GetComponent<TextMeshProUGUI>().text = currentLLMAnswerData.Description;
+        answerUI.transform.Find("Concept (Text)").GetComponent<TextMeshProUGUI>().text = currentLLMAnswerData.Concept;
+        answerUI.transform.Find("Description (Text)").GetComponent<TextMeshProUGUI>().text = currentLLMAnswerData.Description;
 
         if (currentLLMAnswerData.Effect != "none")
         {
