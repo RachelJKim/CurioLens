@@ -18,12 +18,15 @@ Return the result in JSON format with the following structure:
 }
 ```
 
-**Always write the `concept` and `description` fields in Korean.**  
+### Formatting Rules
+1. **Always write the `concept` and `description` fields in Korean.**  
+2. The effect must use the exact English identifier listed below (if matched).
+3. If the concept is even loosely related to an effect in the table below, **prioritize using it**.
 
-### Effect DB: Use the following effect names if the identified concept matches one of these: (effect : effectname)
-1. Convection : ConvectionFlow
-2. Diffusion : DiffusionCloud
-3. Resistance : Resistance
+### Effect DB: Use the following effect names if the identified concept matches one of these:
+1. Convection
+2. Diffusion
+3. Resistance
 
 # Examples
 ## Example

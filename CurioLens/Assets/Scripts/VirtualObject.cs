@@ -71,6 +71,8 @@ public class VirtualObject : MonoBehaviour
                 DataManager.Instance.AddObjectData(gameObject.name, currentLLMAnswerData.Concept, currentLLMAnswerData.Description);
                 break;
             case PoseType.ThumbsDown: // UI 제거
+                InteractionManager.Instance.RemoveUI(UIType.Question);
+                InteractionManager.Instance.RemoveUI(UIType.Answer);
                 break;
         }
     }
