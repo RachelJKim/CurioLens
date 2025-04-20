@@ -58,7 +58,7 @@ public class FirestoreManager : MonoBehaviour
             List<UserData> userDataList = JsonConvert.DeserializeObject<List<UserData>>(jsonString);
             Debug.Log("UserData list parsed successfully!");
 
-            DataManager.Instance.SetData(objectDataList, userDataList);
+            DataManager.Instance.SetData(currentUserId, objectDataList, userDataList);
         }
         catch (System.Exception e)
         {
@@ -139,7 +139,9 @@ public class FirestoreManager : MonoBehaviour
                         {
                             Name = objDict["Name"].ToString(),
                             Concept = objDict["Concept"].ToString(),
-                            Description = objDict["Description"].ToString()
+                            Description = objDict["Description"].ToString(),
+                            Effect = objDict["Effect"].ToString(),
+                            Question = objDict["Question"].ToString()
                         };
 
                         resultList.Add(obj);
@@ -214,7 +216,9 @@ public class FirestoreManager : MonoBehaviour
                 {
                     { "Name", obj.Name },
                     { "Concept", obj.Concept },
-                    { "Description", obj.Description }
+                    { "Description", obj.Description },
+                    { "Effect", obj.Effect },
+                    { "Question", obj.Question }
                 };
 
                 convertedList.Add(objDict);
@@ -239,55 +243,4 @@ public class FirestoreManager : MonoBehaviour
         }
 
     }
-
-    // public async Task<string> LoadDataFromFirestore() // data 가져오기
-    // {
-    //     try
-    //     {
-    //         // quiz_data 컬렉션의 모든 문서 가져오기
-    //         CollectionReference quizDataRef = db.Collection("quiz_data");
-    //         // QuerySnapshot snapshot = await quizDataRef.GetSnapshotAsync();
-      
-    //         // 문서 데이터를 담을 리스트
-    //         List<Dictionary<string, object>> quizDataList = new List<Dictionary<string, object>>();
-
-
-    //         await quizDataRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
-    //         {
-    //             if (task.IsCompleted && !task.IsFaulted && !task.IsCanceled)
-    //             {
-    //                 QuerySnapshot snapshot = task.Result;
-
-    //                 foreach (DocumentSnapshot document in snapshot.Documents)
-    //                 {
-    //                     if (document.Exists)
-    //                     {
-    //                         // 각 문서를 Dictionary 형태로 변환하여 리스트에 추가
-    //                         Dictionary<string, object> docData = document.ToDictionary();
-
-    //                         if (!docData.ContainsKey("currentId"))
-    //                         {
-    //                             quizDataList.Add(docData);
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //             else
-    //             {
-    //                 Debug.LogError("Error loading data: " + task.Exception);
-    //             }
-    //         });
-
-    //         // 리스트를 JSON 형식으로 변환
-    //         string jsonData = JsonConvert.SerializeObject(quizDataList, Formatting.Indented);
-    //         Debug.Log("json Data" + jsonData);
-
-    //         return jsonData;
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         Debug.LogError("Error loading data from Firestore: " + e.Message);
-    //         return null;
-    //     }
-    // }
 }

@@ -11,4 +11,8 @@ public class ObjectData
     public string Concept;
     [SerializeField]
     public string Description;
+    [SerializeField]
+    public string Effect;
+    [SerializeField]
+    public string Question;
 }

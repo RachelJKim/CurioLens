@@ -5,9 +5,11 @@ using UnityEngine;
 using System.Text;
 using System.IO;
 using System;
+using UnityEngine.Events;
 
 public class STTManager : MonoBehaviour
 {
+    public static STTManager Instance;
     private STTData sttData;
     private string _microphoneID = null;
     private AudioClip _recording = null;
@@ -24,8 +26,18 @@ public class STTManager : MonoBehaviour
     // 사용할 언어(Kor)를 맨 뒤에 붙임
     string url = "https://naveropenapi.apigw.ntruss.com/recog/v1/stt?lang=Kor";
 
+    public UnityEvent<string> VoiceTextUpdated;
+
+    private void Awake()
+    {
+        Instance = this;
+
+        VoiceTextUpdated = new UnityEvent<string>();
+    }
+
     private IEnumerator PostVoice(string url, byte[] data)
     {
+        Debug.Log("[HERE] " + data.Length);
         // request 생성
         WWWForm form = new WWWForm();
         UnityWebRequest request = UnityWebRequest.Post(url, form);
@@ -51,7 +63,8 @@ public class STTManager : MonoBehaviour
             string message = request.downloadHandler.text;
             VoiceRecognize voiceRecognize = JsonUtility.FromJson<VoiceRecognize>(message);
             Debug.Log("Server response: " + voiceRecognize.text);
-
+            VoiceTextUpdated.Invoke(voiceRecognize.text);
+            
             if (sttData != null)
             {
                 sttData.UpdateText(voiceRecognize.text);
@@ -66,9 +79,13 @@ public class STTManager : MonoBehaviour
         if (Microphone.devices.Length == 0)
         {
             Debug.LogError("No microphone found!");
-            return;
         }
-        _microphoneID = Microphone.devices[1];
+        foreach (var device in Microphone.devices)
+        {
+            Debug.Log("🎤 Detected Microphone: " + device);
+        }
+
+        _microphoneID = Microphone.devices[0];
         Debug.Log("Using mic: " + _microphoneID);
     }
 

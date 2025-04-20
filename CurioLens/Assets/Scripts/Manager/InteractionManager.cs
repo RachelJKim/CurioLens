@@ -5,7 +5,8 @@ using Oculus.Interaction.Input;
 public enum UIType
 {
     Question,
-    Answer
+    Answer,
+    QuestionFromOther
 }
 
 public class InteractionManager : MonoBehaviour
@@ -15,12 +16,14 @@ public class InteractionManager : MonoBehaviour
     [Header("UI Prefabs")]
     public GameObject questionUIPrefab;
     public GameObject answerUIPrefab;
+    public GameObject questionFromOtherUIPrefab;
 
     [Header("Pinch Hand (Left)")]
     public OVRHand leftHand;
 
     public GameObject questionUI = null;
     public GameObject answerUI = null;
+    public GameObject questionFromOtherUI = null;
 
     public GameObject currentlyHoveredObject = null;  // Track hovered object
     private bool isPinchTriggered = false;
@@ -66,7 +69,7 @@ public class InteractionManager : MonoBehaviour
                 if (questionUI == null)
                 {
                     questionUI = Instantiate(questionUIPrefab, hoveredObjectTransfrom);
-                    questionUI.transform.position = basePosition;
+                    questionUI.transform.position = basePosition + Vector3.right * 0.7f;
                     questionUI.transform.rotation = Quaternion.identity;
                     questionUI.name = uiType.ToString();
                     Debug.Log("Question UI placed.");
@@ -79,9 +82,21 @@ public class InteractionManager : MonoBehaviour
                 if (answerUI == null)
                 {
                     answerUI = Instantiate(answerUIPrefab, hoveredObjectTransfrom);
-                    answerUI.transform.position = basePosition;
+                    answerUI.transform.position = basePosition + basePosition + Vector3.left * 0.7f;
                     answerUI.transform.rotation = Quaternion.identity;
                     answerUI.name = uiType.ToString();
+                    Debug.Log("Answer UI placed.");
+
+                    return answerUI;
+                }
+                break;
+            case UIType.QuestionFromOther:
+                if (questionFromOtherUI == null)
+                {
+                    questionFromOtherUI = Instantiate(questionFromOtherUIPrefab, hoveredObjectTransfrom);
+                    questionFromOtherUI.transform.position = basePosition + basePosition + Vector3.left * 0.7f;
+                    questionFromOtherUI.transform.rotation = Quaternion.identity;
+                    questionFromOtherUI.name = uiType.ToString();
                     Debug.Log("Answer UI placed.");
 
                     return answerUI;

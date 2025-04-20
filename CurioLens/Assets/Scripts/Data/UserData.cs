@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 
 [System.Serializable]
 public class UserData
 {
-    [SerializeField]
+    [JsonProperty("id")]
     private int id;
-    [SerializeField]
+    [JsonProperty("objectList")]
     private List<ObjectData> objectList;
 
     public int Id => id;
