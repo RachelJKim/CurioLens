@@ -97,7 +97,7 @@ public class InteractionManager : MonoBehaviour
                     questionFromOtherUI.transform.position = basePosition + basePosition + Vector3.left * 0.7f;
                     questionFromOtherUI.transform.rotation = Quaternion.identity;
                     questionFromOtherUI.name = uiType.ToString();
-                    Debug.Log("Answer UI placed.");
+                    Debug.Log("question from other placed.");
 
                     return answerUI;
                 }

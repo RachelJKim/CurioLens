@@ -57,15 +57,22 @@ public class VirtualObject : MonoBehaviour
     private async void GetAnswerData(string question)
     {
         this.question = question;
+        if (question == null || question == String.Empty)
+        {
+            return;
+        }
+
         currentLLMAnswerData = await LLMManager.Instance.GetDescriptionJson(gameObject.name, question);
 
         Debug.Log("퀘스천은" + question);
-
         Debug.Log("science description 입니다" + currentLLMAnswerData.Concept + " : " + currentLLMAnswerData.Description + " : " + currentLLMAnswerData.Effect);
 
         GameObject answerUI = InteractionManager.Instance.PlaceUI(UIType.Answer, transform);
-        answerUI.transform.Find("Concept (Text)").GetComponent<TextMeshProUGUI>().text = currentLLMAnswerData.Concept;
-        answerUI.transform.Find("Description (Text)").GetComponent<TextMeshProUGUI>().text = currentLLMAnswerData.Description;
+        if (answerUI != null)
+        {
+            answerUI.transform.Find("Concept (Text)").GetComponent<TextMeshProUGUI>().text = currentLLMAnswerData.Concept;
+            answerUI.transform.Find("Description (Text)").GetComponent<TextMeshProUGUI>().text = currentLLMAnswerData.Description;
+        }
 
         EffectType effectType = (EffectType)System.Enum.Parse(typeof(EffectType), currentLLMAnswerData.Effect);
         EffectManager.Instance.CreateEffect(effectType, transform);

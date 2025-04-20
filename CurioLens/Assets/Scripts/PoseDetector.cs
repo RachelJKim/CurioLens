@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Oculus.Interaction;
 using UnityEngine;
 using UnityEngine.Events;

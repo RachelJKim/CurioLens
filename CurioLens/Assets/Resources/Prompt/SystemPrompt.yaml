@@ -33,12 +33,11 @@ Effect DB (allowed values only):
 6. Congelation  
 7. Spark  
 8. Warmth  
-9. Rain  
-10. Electric  
-11. Splash  
-12. GroundConnecting  
-13. Snow  
-14. Bubbles
+9. Electric  
+10. Splash  
+11. GroundConnecting  
+12. Snow  
+13. Bubbles
 
 If no exact keyword is found, select the **most semantically related** one from the list above. Do not use "none" or make up any new effect name.
 

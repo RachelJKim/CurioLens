@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum EffectType
 {
-    Convection, Diffusion, Resistance, Heating, Burn, Congelation, Spark, Warmth, Rain, Electric, Splash, GroundConnecting, Snow, Bubbles
+    Convection, Diffusion, Resistance, Heating, Burn, Congelation, Spark, Warmth, Electric, Splash, GroundConnecting, Snow, Bubbles
 }
 
 public class EffectManager : MonoBehaviour
